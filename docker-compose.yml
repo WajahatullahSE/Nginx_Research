@@ -1,0 +1,88 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-wu
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+      - ./conf.d:/etc/nginx/conf.d
+      - ./html:/usr/share/nginx/html
+      - ./log:/var/log/nginx
+      - ./auth:/etc/nginx/auth 
+      - ./cache:/var/cache/nginx
+    depends_on:
+      - backend
+      - backend1
+      - backend2
+      - backend3
+    
+    networks:
+      - nginx-net
+    restart: unless-stopped
+
+  backend:
+    image: nginx:alpine
+    container_name: nginx-backend
+    volumes:
+      - ./backend/app:/usr/share/nginx/html
+    expose:
+      - "80"
+    networks:
+      - nginx-net
+
+  backend1:
+    image: nginx:alpine
+    container_name: backend1
+    volumes:
+      - ./backend1:/usr/share/nginx/html:ro
+    expose:
+      - "80"
+    networks:
+      - nginx-net
+
+  backend2:
+    image: nginx:alpine
+    container_name: backend2
+    volumes:
+      - ./backend2:/usr/share/nginx/html:ro
+    expose:
+      - "80"
+    networks:
+      - nginx-net
+
+  backend3:
+    image: nginx:alpine
+    container_name: backend3
+    volumes:
+      - ./backend3:/usr/share/nginx/html:ro
+    expose:
+      - "80"
+    networks:
+      - nginx-net
+      
+  php-fpm:
+    image: php:fpm-alpine
+    container_name: php-fpm
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - nginx-net
+    expose:
+      - "9000"
+
+  websocket:
+    image: jmalloc/echo-server
+    container_name: websocket
+    expose:
+      - "8081"
+    networks:
+      - nginx-net
+
+networks:
+  nginx-net:
+
