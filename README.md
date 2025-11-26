@@ -31,19 +31,18 @@ This repository contains **research and practical implementations** of NGINX fea
   - Frame Options (`X-Frame-Options`)
   - MIME-Type Options (`X-Content-Type-Options`)
 - **Add basic authentication** for restricted areas.
-- **Implement rate limiting** and **connection limits** to control traffic.
+- **Implement rate limiting**,**connection limits** and **buffer settings** to control traffic.
 - **Set up proxy caching** with `proxy_cache` and validate cache hits/misses.
 
 ### **Dynamic Content & Advanced Routing**
 - **Integrate PHP** using PHP-FPM and `fastcgi_pass`.
 - **Add WebSocket support** through proxy configuration (`Upgrade` and `Connection` headers).
 - **Configure URL rewriting and redirects** for clean and maintainable URLs.
-- **Create custom error pages** (e.g., 404, 500) for better user experience.
+- **Create custom error pages** for better user experience.
 
 ### **Multi-Site & Logging**
 - **Host multiple sites** with subdomains and separate server blocks.
 - **Use NGINX variables** like `$host`, `$remote_addr`, and `$request_uri` for dynamic configurations.
-- **Modify `nginx.conf`** using the `include` directive to organize configurations.
 - **Customize access logs** for detailed request tracking.
 
 ---
